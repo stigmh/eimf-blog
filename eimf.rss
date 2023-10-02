@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>Everything is My Fault</title>
+  <link>http://www.everythingismyfault.com/</link>
+  <description>A developer's Dumpbin.</description>
+  <language>en-us</language>
+  <lastBuildDate>Mon, 02 Oct 2023 20:12:52 CEST</lastBuildDate>
+  <item>
+    <title>Pseudocoding games</title>
+    <link>http://www.everythingismyfault.com/articles/abstract-games.html</link>
+    <description>This tutorial (with exercises in part 3) aims at teaching you how, this without using any specific technology and by only using abstract terms. Technology is indeed important and which you choose to develop your game programming skills is entirely up to you. However, it wont get you far unless you know how to think in order to create your desired functionality. The entire purpose of this tutorial is to teach you the mindset of a game programmer, and how one must think in order to utilize your technology/tools to achieve your own custom functionality.</description>
+    <pubDate>Wed, 02 Oct 2013 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>scp File Transfers</title>
+    <link>http://www.everythingismyfault.com/articles/scp.html</link>
+    <description>scp is an excellent command line program for secure file transfer through the SSH protocol, and it is distributed together with SSH on (most?) modern Unix based distributions, including OSX and Ubuntu. It is especially useful for file transfers when you are remote controlling a machine without any graphical user interface.</description>
+    <pubDate>Tue, 01 Oct 2013 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>ec for Windows</title>
+    <link>http://www.everythingismyfault.com/articles/ec-windows.html</link>
+    <description>I was tired of complex routines for compiling Emerald programs on Windows, so I developed this small Open Source tool called &#x26;laquo;ec for Windows&#x26;raquo;. &#x26;laquo;ec for Windows&#x26;raquo; is an open source multi-threaded command line (cmd) tool used to easily compile Emerald programs. NB: Requires that you have installed the  Emerald Windows compiler.</description>
+    <pubDate>Mon, 11 Mar 2013 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>OpenSuse's Package Manager</title>
+    <link>http://www.everythingismyfault.com/articles/zypper.html</link>
+    <description>I'm posting this mini-entry as it took so much effort to find the name of OpenSuse's package manager, especially considering that it wasn't my computer. OpenSuse 12's package manager is called zypper! Example of usage:</description>
+    <pubDate>Sat, 19 Jan 2013 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>Howto properly install NVIDIA drivers on Ubuntu 12.10</title>
+    <link>http://www.everythingismyfault.com/articles/nvidia-ubuntu.html</link>
+    <description>I decided to write this note to my selves and every one else with NVIDIA graphics driver issues on Ubuntu, as I spent more than two days figuring this out. The open source original driver that came with the Ubuntu installation was slow and buggy, so I decided to install NVIDIA's proprietary drivers instead. A simple Google search gave me a lot of hits with the same solution, but it didn't work. The result was a lowres CPU drawn screen and the Ubuntu user interface (Unity) failed to load.</description>
+    <pubDate>Tue, 11 Dec 2012 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>An introduction to PHP</title>
+    <link>http://www.everythingismyfault.com/articles/php-introduction.html</link>
+    <description>I’ve been a PHP developer for more than 6 years now and time has come to start sharing some of my knowledge. It was my good friend, Martin Nordal, who introduced me to the language, and I’ve been hooked ever since. PHP is free, easy to learn, fast, secure and a great tool for anyone who ever needs dynamic content published on the world wide web. This post will give you a quick and brief introduction to PHP, how it works and how to code.</description>
+    <pubDate>Fri, 10 Aug 2012 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>A .htaccess reference</title>
+    <link>http://www.everythingismyfault.com/articles/htaccess.html</link>
+    <description>Adding or modifying a .htaccess file on an Apache web server to override some configurations or create redirects is extremely useful, but is something I rarely do. Usually a few times during a new web project, which makes it somewhat hard to remember the proper commands and syntax to make it behave the way you want.</description>
+    <pubDate>Tue, 23 Nov 2010 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>PHP sort arrays by property</title>
+    <link>http://www.everythingismyfault.com/articles/php-usort.html</link>
+    <description>If you look at PHP's official comparison of array sorting functions, you'll see that there are several sort functions to sort an array based upon the array member values. However, they don't give you the opportunity to sort multidimensional arrays. At least not without doing some complex tweaking of the functions.</description>
+    <pubDate>Thu, 11 Nov 2010 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>Apache Virtual Server 1-2-3</title>
+    <link>http://www.everythingismyfault.com/articles/apache-vhosts.html</link>
+    <description>Several years have passed by since I first was introduced to Linux and Apache. I've never been a Linux/Unix desktop guy, but no OS beats Linux/Unix distros when it comes to servers. It's about one and a half year ago since I first was introduced to Virtual Servers in Apace and I'm using it more and more. Setting up a Virtual Server is easy, fast and extremely useful; it gives you the opportunity to host several sites (with different domains) on one server. I'll use everythingismyfault.com as an example in this guide. Everythingismyfault.com has the same IP as nerdvar.com and is running from a directory on the same server, Virtual Server makes it possible. This technique has been tested on CentOS5, Mandriva Linux and Fedora. I should also work on the most distros with Apache 2.</description>
+    <pubDate>Tue, 09 Nov 2010 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  <item>
+    <title>telnet on modern Windows</title>
+    <link>http://www.everythingismyfault.com/articles/telnet-win.html</link>
+    <description>The telnet feature is disabled on Windows Vista (and newer) as default. Most likely because it requires resources (very few though) and the average user will most likely never need it. It's however still useful for developers like me (and sys-admins) as I recently needed it for Android development. In order to develop applications using location based services, you need to send the Android emulator one or more coordinate sets with a longitude &#x26;amp; latitude of it's current virtual position. This via telnet.</description>
+    <pubDate>Mon, 08 Nov 2010 0:00:00 Europe/Oslo</pubDate>
+  </item>
+  </channel>
+</rss>

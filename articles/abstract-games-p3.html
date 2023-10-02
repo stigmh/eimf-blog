@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Abstract programming | EiMF</title>
+    
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../js/highlight/styles/default.css" />
+    
+    <script type="text/javascript" src="../js/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+
+    <!--[if IE]>
+    <style type="text/css">#articles .article { padding-right: 7px; }</style>
+    <![endif]-->
+  </head>
+  <body>
+  
+    <div id="menu">
+      <div><img id="expand" src="../img/menu.png" alt="Menu" /></div>
+      <ul>
+        <li><img src="../img/smh-logo-s.png" alt="EiMF" /></li>
+        <li><a href="../index.html">Home</a></li>
+        
+        <li><a href="../eimf.rss">RSS</a></li>
+      </ul>
+    </div>
+    
+    <div id="content">
+    
+
+<h1>Abstract programming</h1>
+
+<p>You now know the core mechanics behind game programming: A game loop ensuring user interaction and manipulating graphics, an how to work with graphics at an abstract level. Now comes the fun stuff! It is time to do some abstract programming, where you have to plan and think the solutions. Why is this useful? You can use abstract programming and brainstorming to figure out what needs to be done programmatically in order to achieve the specific functionality you're looking for in your games. It is a tool to use when you have a brilliant idea, but currently no clue on how to get there. Let's start with a simple exercise!</p>
+
+<h4>Exercise 1 - moving a helicopter</h4>
+
+<p><em>I recommend that you actually do these exercises rather then skipping right to the solutions. You won't become an independent abstract programmer nor solution finder if you don't practice! You can build on the A4 paper example used earlier as a tool to solve these exercises, as it gives a more visual feel. Also, imagine that we use the same coordinate system as Adobe Flash which was described earlier.</em></p>
+
+<p>You are in this exercise supposed to use your newly required knowledge to figure out how to move this chopper out of the screen. Imagine that you already have a Context with a chopper loaded in a object space and that is placed on the screen - see the illustration below. Now, when this &quot;game&quot; is launched, the chopper should move against the right and eventually out of the screen. In this case, it is OK to address coordinates outside the window. Now how would you do it? Solution is below the image.</p>
+
+<p><img alt="" src="./assets/challenge_01.svg" /></p>
+
+<p><strong>Solution:</strong></p>
+
+<p>Set up a game loop. The game loop should modify the chopper object's coordinates in the Context (translation) to move a little (for example 5px) to the right for every iteration (frame). Some technologies will require that you perform a redraw (render call) to update the screen, while others do this for you. How fast it will move will depend on the processor (CPU) which means that its speed will vary from machine to machine. This can easily be solved by moving it <em>x * DeltaTime</em> pixels to the right instead of a constant value. DeltaTime is the calculated elapsed time since last frame.</p>
+
+<h4>Exercise 2 - simple collision detection</h4>
+
+<p>This exercise is a bit more difficult and builds on the previous solution. Now you want to change direction of the chopper when it hits one of the walls. How do you solve that? The chopper's start position is the same as in the previous exercise.</p>
+
+<p><img alt="" src="./assets/challenge_02.svg" /></p>
+
+<p><strong>Solution:</strong></p>
+
+<p>First off all, we need a variable to determine its direction. This should be declared outside of the game loop. It could be a boolean called <em>isMovingRight</em> and could initially be set to <em>true</em> as the chopper starts at the left. Next, enter the game loop and add an if-condition that checks the variable. Increment <em>x</em> if it moves right, decrease <em>x</em> if it doesn't (moves left).</p>
+
+<p>We will now need to add code to check whether the chopper is touching a wall or not. Yes, it is in the game loop after the movement, and yes it needs to be checked every frame. We can start off with the easiest one, which is the left screen. Check if the chopper object's x coordinate is smaller than or equal to 0. If it is true, it is either touching the wall or has been moved slightly outside the screen. The latter is more common when working with <em>DeltaTime</em>, rather than constant values. If it is true, change its <em>x</em> coordinate to zero, in case its outside, and change the <em>isMovingRight</em> variable to <em>true</em>.</p>
+
+<p>Finally we need to add a check for the right wall and this is a bit trickier. If you don't think much about it, you would probably say that it is sufficient to check if the chopper object's <em>x</em> coordinate is greater than the Context's width, but is that really true? No, or, it depends entirely on what technology you want to use, but it won't work in most technologies, including Flash, where the object's coordinates are referencing to the very top-left corner of the object space. This means that our if-statement wouldn't trigger before the chopper actually had left the right of our screen. So how do we solve it? We need to add the chopper's (object space) width to the calculation; <em>if ((chopper.x + chopper.width) &gt;= context.width)</em>. If it is, change it's x coordinate to the Context's width minus the chopper's width (in case it is outside), and change the <em>isMovingRight</em> variable to <em>false</em>. Do an eventual render call to update the screen if necessary (after the if-test).</p>
+
+<h4>Exercise 3 - User input</h4>
+
+<p>Now imagine going back to scratch. You just realized that an automated moving chopper isn't really what you needed for it to be a game. You want to interact with the player! Ditch the first part of the game loop from the previous exercise and keep the wall collision detection. How do you make it move to the correct direction when the user presses one of the arrow keys? You can imagine that the input checking is done for you and you just need to check whether a specific key has been pressed or not.</p>
+
+<p><img alt="" src="./assets/challenge_03.svg" /></p>
+
+<p><strong>Solution:</strong></p>
+
+<p>At the beginning of the game loop, ask the API, which is a set of calls (functions) to the <em>Virtual Machine</em>, or <em>Game Engine</em> for a list of keys that has been pressed since the last frame. For each of the four input keys, check if that key resides within the list. Some APIs allow this to be done with <em>events</em> instead and the only difference is that the following modifications are made inside the <em>event handlers</em> instead of directly n the game loop. This is not ideal for games, more on that in the abstract input chapter.</p>
+
+<p><img alt="" src="./assets/api.svg" /></p>
+
+<p>In the game loop, check for the following occurrences. If <em>arrow up</em>, decrease the <em>y</em> coordinate of the chopper's object space in the Context. Remember, in our (<em>Adobe Flash's</em>) coordinate system, the <em>y</em> coordinate is reversed. If <em>arrow down</em>, increase the <em>y</em> coordinate of the chopper object. If <em>arrow left</em>, decrease the chopper object's <em>x</em> coordinate. If <em>arrow right</em>, increase the chopper object's coordinate. Re-render each frame if necessary.</p>
+
+<p>It could also be wise to add a collision detection similar to the already existing one, but on the <em>y</em> coordinate instead. In this way, the player won't be able to leave the bottom or top of the screen.</p>
+
+<p>At the start of this solution I shortly mentioned APIs. It is usually a set of pre-made and also often OS independent libraries of functionality that makes low-level tasks, like retrieving user input, much easier for the developer! This often also includes the graphics and rendering system. You should ideally never write such functionality yourself, unless you are a system/game engine programmer working on specific parts of the core system. The API is often a part of the <em>Virtual Machine</em> or <em>Game Engine's</em> core libraries. It provides the link between your game loop code and the final user output (window with graphics). Its main task is to allow you as a developer to focus entirely on the gameplay and not system specific tasks.</p>
+
+<h4>Exercise 4 - missile + score</h4>
+
+<p>Continue from the solution of the last exercise, and imagine that you are now to program an opponent in your game. Assume that graphics has been loaded which has been placed in a new object space that holds the enemy. The enemy is placed on the screen. It is OK for this exercise to say that it is a passive enemy, which means that it doesn't do anything except for being a static target. When the player presses <em>space</em>, a missile should be fired from the front of the player chopper and fly towards the enemy. The enemy should disappear when the missile hits him, and the score should be increased. A missile must also be removed on hit, or when it's outside of the screen. It is OK for the score to assume that you have some "magical" object that places the score on the screen and gets updated when you change the value. Multiple missiles should be supported; it means that the player should be able to press <em>space</em> multiple times allowing multiple missiles on the screen. To keep things simple, you have now removed the ability for vertical movement; the player is stuck at the same <em>x</em> coordinate.</p>
+
+<p><img alt="" src="./assets/challenge_04.svg" /></p>
+
+<strong>Solution:</strong>
+
+<p>First, as we are to support multiple missiles, we should probably have an <em>Array</em> or <em>Array</em> like <em>container</em> to hold a list of references to active missiles (object spaces). Declare this outside of the game loop. Let's name it <em>missileList</em>. We must also make sure to load the missile graphics before the game loop, and store a reference to it.</p>
+
+<p>Add a new <em>if-statement</em> in the game-loop where you check user input. Check whether the user has pressed <em>space</em>. If true, create a new object space (missile object), add or copy (depending on the technology) the graphics into the missile object. Next is to place the missile in front of the chopper. Retrieve the chopper's coordinates, width and height. Set the missile object's <em>x</em> coordinate to the chopper's coordinate plus (+) the chopper's width. This will place it to the very right of the chopper. Set the missile object's <em>y</em> coordinate to the chopper's <em>y</em> coordinate plus half of the chopper's height, minus half of the missile's height; <em>missile.y = chopper.y + ((chopper.width / 2) - missile.height)</em>. This will position the missile at the vertical center of the chopper. Finally, add the missile object to the <em>missileList</em>. It could also be wise here to add a cooldown feature, allowing missiles to be maximum at a rate of <em>n</em> ms to prevent instant creation. This comes in a later chapter.</p>
+
+<p>Next, move out of the <em>if-statement</em> and add a loop, typically a <em>for-loop</em> that loops through every missile in the <em>missileList</em>. For each missile, increase it's <em>x</em> coordinate and check if it is outside the window (<em>if (missile.x &gt;= Context.width)</em>) and if it collides with the enemy. If it is outside, remove it from the list and from the Context. Score should also be increased.</p>
+
+<p>To check for enemy collision, check if the missile's <em>x</em> coordinate plus (+) its width is within the range of the enemy's <em>x</em> coordinate, and that the missile's <em>x</em> coordinate is smaller than the enemy's <em>x</em> coordinate plus (+) the enemy's width; <em>if (((missile.x + missile.width) &gt;= enemy.x) and (missile.x &lt; (enemy.x + enemy.width)))</em>. If true, it is a positive vertical hit and you should do the same thing for the <em>y</em> axis and heights. This gives a <em>rectangular</em> collision scheme. More on that in the abstract <em>collision detection</em> chapter.</p>
+
+<h4>Exercise 5 - platformer</h4>
+
+<p>This final exercise leaves our chopper genre, and tries something completely different; a simple platformer. I've decided to call it <em>The Samurai Guy</em>. Look at the picture below for the initial start of the game. The goal is to move the player to the flag without falling off the screen. This time, absolutely nothing has been done for you. You must set it up and make it work, virtually and abstract of course.</p>
+
+<p><img alt="" src="./assets/challenge_05.svg" /></p>
+
+<p><strong>Solution:</strong></p>
+
+<p>This solution is a bit less detailed than the previous ones, and thus more abstract. It is because it would primarily be a lot of repetition from the previous solutions, and you should now be able to do deeper levels of abstraction on your own. All the way down to the actual code implementation. Abstract programming also works in this way. Start at the most abstract level, like; &quot;we need to check for collision detection in the game loop&quot;, all the way down to the actual code implementation (usually some if-test).</p>
+
+<p>Start off before the game loop by loading the graphics, and create one object space for each one of them. The graphics representing the ground should be added to an <em>Array</em> or <em>Array</em> like <em>container</em>, let's call it <em>platformList</em>. Add all graphics to the Context. Create an <em>integer</em> variable called <em>jumpTimer</em> and initialize it to zero. Create another <em>integer</em> variable, set to 3, called <em>health</em>. Last, create a <em>boolean</em> variable called <em>isInAir</em>, set it to <em>false</em>.</p>
+
+<p>Next, create the game loop, start off by checking user input. If the player has pressed the left or right <em>arrow keys</em>, move the player to either left or right by manipulating the <em>x</em> coordinate. When the player presses space, check if <em>isInAir</em> is false. If it is, set it to true and set <em>jumpTimer</em> to the number of milliseconds you want him to go upwards. This prevents jumping while in air.</p>
+
+<p>After user input, check if the user is standing one one of the platforms. Yes, you will have to iterate through the list of platforms and check collisions against all of them. Make sure that the collision is registered above or on top of the platforms and not under, this to prevent strange behavior when the player hits a platform with his head. If a collision on top of a platform has occurred, set <em>isInAir</em> to <em>false</em>. If a collision happened underneath a platform, set <em>jumpTimer</em> to zero. If the player isn't near a platform, set <em>isInAir</em> to <em>true</em> and check <em>jumpTimer</em>. If it's greater than zero, move the player upwards (jumping) and decrease the timer by the elapsed time since last frame. If not, move the player down towards the ground (bottom of the screen).</p>
+
+<p>The remaining thing to do check for collision with walls, the holes at the bottom of the screen, and with the flag. If the player hit the flag, a &quot;You won&quot; text or similar should appear. Decrease health, remove one of the hearts from the Context, and reposition the player at the start if (s)he hits one of the holes. That's basically it!</p>
+
+<p>I know there are many other ways to achieve this functionality, including the use of <em>velocity</em> and other more dynamic principles, but those are advanced topics not suitable for this abstract introduction and are covered in later chapters.</p>
+
+<h2>Final words</h2>
+
+<p>Wow, that was one long session, but hopefully you've learned a lot! The goal is that when you delve into a technology of your choice, you will be able to use this knowledge for successful time planning and development of functionality. Do not be afraid if you didn't get it all, this chapter works very well as a reference for you to come back to when you've got some hands-on experience and need advice or to repeat some theory.</p>
+
+<p>What's next? Find a technology/tool if you haven't already, learn what you need and start practising by making smaller games. You could for instance try to actually implement the exercises above. Online tutorials are OK to use, but you should also try to implement custom functionality or you won't learn much. Good starter technologies are FlashDevelop (or Adobe Flash) &amp; ActionScript, Unity &amp; JavaScript/C#, and HTML5 w/JavaScript.</p>
+
+<p>Feel free to give comments, feedback or questions. I will be happy to read and repl<p><h4>This article is separated into the following parts:</h4>
+
+<ul>
+<li><a href="./abstract-games.html">Part 1</a>: Pseudocoding games</li>
+<li><a href="./abstract-games-p2.html">Part 2</a>: Creating functionality</li>
+<li><a href="./abstract-games-p3.html">Part 3</a>: Abstract programming</li>
+</ul>
+
+    </div>
+    
+    <div id="footer">
+      &copy; Stig 2010-2023
+    </div>
+  </body>
+</html>

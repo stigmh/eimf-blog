@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Untitled | EiMF</title>
+    
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="js/highlight/styles/default.css" />
+    <link rel="icon" href="favicon.ico" />
+    
+    <script type="text/javascript" src="js/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <!--[if IE]>
+    <style type="text/css">#articles .article { padding-right: 7px; }</style>
+    <![endif]-->
+  </head>
+  <body>
+  
+    <div id="menu">
+      <div><img id="expand" src="img/menu.png" alt="Menu" /></div>
+      <ul>
+        <li><img src="img/smh-logo-s.png" alt="EiMF" /></li>
+        <li><a href="index.html">Home</a></li>
+        
+        <li><a href="eimf.rss">RSS</a></li>
+      </ul>
+    </div>
+    
+    <div id="content">
+</div>
+
+    
+    <div id="footer">
+      &copy; Stig 2010-2023
+    </div>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Creating functionality | EiMF</title>
+    
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../js/highlight/styles/default.css" />
+    
+    <script type="text/javascript" src="../js/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+
+    <!--[if IE]>
+    <style type="text/css">#articles .article { padding-right: 7px; }</style>
+    <![endif]-->
+  </head>
+  <body>
+  
+    <div id="menu">
+      <div><img id="expand" src="../img/menu.png" alt="Menu" /></div>
+      <ul>
+        <li><img src="../img/smh-logo-s.png" alt="EiMF" /></li>
+        <li><a href="../index.html">Home</a></li>
+        
+        <li><a href="../eimf.rss">RSS</a></li>
+      </ul>
+    </div>
+    
+    <div id="content">
+    
+
+<h1>Creating functionality</h1>
+
+<p>You know now how to work with graphics in game on an abstract level, but you don't know how to actually control and move (translate) the graphics to simulate the game functionality <u>you</u> want. This sections aims at teaching you how. It is actually what being a game programmer is all about. The problem is always the same; you have an idea, how do you realize it using your tool? There are always multiple solutions, some so advanced you have no idea where to start and here's where the abstract programming comes to the rescue. More on that soon, you'll first need to know where to implement the functionality.</p>
+      
+<h3>The Game Loop</h3>
+      
+<img src="./assets/game_loop.svg" alt="" />
+      
+<p>First of all, what is a game loop? All game development technologies support the concepts of loops in one way or another. Loops are defined functionality that you want to be repeated, with either &quot;infinite&quot; or a defined number of iterations. So what are games? A loop of functionality that performs input/output, usually to allow user interaction and to draw graphics on screen. Games are dynamic as the user's actions affect the output. There is no way you will be able to get there without loops, hence the &laquo;Game loop&quot;, which is just a common name for the loop implementing gameplay mechanics. Game loops are typically &quot;infinite&quot; as they run until the user decides to quit the game or they reach the state of &laquo;game over&raquo;. The following example is a relatively generic example of the simplest game loop, and actually also the simplest game engine. Do not try it in <em>JavaScript</em> or <em>ActionScript</em> as it will freeze your browser or Flash player.</p>
+      
+<pre><code class="C">// This could also be "while (true)"
+while(1) {
+	// Game code here
+}</code></pre>
+      
+<p>No matter what, every single game ever made has a game loop and this is where you implement your functionality. Even the simple point and click games where the loop itself is hidden to the developer. These are often <em>event based</em> games, and it is true that the developer will never see the actual implementation of the loop. But hold on, events might seem like magic but someone or something needs to maintain the event system. This includes storing events, like when the user clicks somewhere on the screen, and executing the so called <em>event listeners</em> ,which is the functionality that you have defined to be executed when a specific event occurs. And as you might have guessed; Maintaining the events requires a loop implemented by the technology you are using. Usually by the <em>virtual machine</em> like the <em>Java runtime environment</em>, the <em>Adobe Flash Player</em>, or a web browsers <em>JavaScript</em> engine. The following examples show the simplest game loop in <em>JavaScript</em> and <em>ActionScript</em>. Do not be alarmed if you don't get it right away.</p>
+
+<pre><code class="JavaScript">/* JavaScript*/
+
+// Create the game loop functionality
+function gameLoop() {
+  // Game code here
+};
+
+// Fire of the game loop at 60 frames per second (1000ms / 60)
+// This is in theory an event firing off at a given interval.
+window.setInterval(gameLoop, 1000 / 60);</code></pre>
+
+<pre><code class="ActionScript">/* ActionScript - frame rate is set in project settings */
+
+// Create the game loop functionality
+function gameLoop(e:Event):void {
+  // Game code here
+} 
+
+// Fire of the game loop every frame
+stage.addEventListener(Event.ENTER_FRAME, gameLoop);</code></pre>
+
+<h4>Short on frames and frame rate</h4>
+
+<p>The word <em>frame</em> is a well known word within game development, but yet a bit vague. In general, it is used to represent an update and is often associated with <em>benchmarking</em>. This by measuring the maximum <em>frame rate</em> your device is capable of producing. Frame rates are typically measured in <em>frames per second</em> (FPS), which means <em>number of updates per second</em>. In terms of computer games, the frame rate is usually associated with the graphics and the <em>Graphics processing unit</em> (GPU). It describes how many images a game renders and draws to the screen per second. Most modern computer games have a graphical frame rate of 30-60 fps, which is sufficient to give a smooth experience as the average human eyes works at 25 fps.</p>
+
+<p>From a developer's perspective, a frame is often used to describe one iteration (loop/round) in the game loop. FPS is in this case used to measure how efficient your game code is, and you want this to go as fast as possible! It is linked to the graphical fps as it is up to the game loop to perform the render call (often at the end), and a slow loop will thus limit the rendering fps. This is in modern games and engines avoided by utilizing individual threads for heavy and slow tasks, like AI, file operations, and networking. It is actually now normal to limit the game loop fps on the client side to 30-60 fps as there is no point of going any faster. It will just eat the CPU's processing power and won't make any difference to the user. Game servers are however still utilized at 100%, as they need to handle as many players as  possible within the shortest amount of time.</p>
+
+<p>I will from now on use the word <em>frame</em> in the context of the game loop, unless I specify that I am talking about graphics.</p>
+
+<p><h4>This article is separated into the following parts:</h4>
+
+<ul>
+<li><a href="./abstract-games.html">Part 1</a>: Pseudocoding games</li>
+<li><a href="./abstract-games-p2.html">Part 2</a>: Creating functionality</li>
+<li><a href="./abstract-games-p3.html">Part 3</a>: Abstract programming</li>
+</ul>
+
+    </div>
+    
+    <div id="footer">
+      &copy; Stig 2010-2023
+    </div>
+  </body>
+</html>

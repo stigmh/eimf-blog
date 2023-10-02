@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pseudocoding games | EiMF</title>
+    
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../js/highlight/styles/default.css" />
+    
+    <script type="text/javascript" src="../js/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+
+    <!--[if IE]>
+    <style type="text/css">#articles .article { padding-right: 7px; }</style>
+    <![endif]-->
+  </head>
+  <body>
+  
+    <div id="menu">
+      <div><img id="expand" src="../img/menu.png" alt="Menu" /></div>
+      <ul>
+        <li><img src="../img/smh-logo-s.png" alt="EiMF" /></li>
+        <li><a href="../index.html">Home</a></li>
+        
+        <li><a href="../eimf.rss">RSS</a></li>
+      </ul>
+    </div>
+    
+    <div id="content">
+    
+
+<h1>Creating game functionality</h1>
+
+<p class="date">2013-10-02</p>
+<img src="article_imgs/abstract-games.png" alt="Pseudocoding games" />
+
+
+
+<h2>Do you want to learn how to program games?</h2>
+
+<p>This tutorial (with exercises in part 3) aims at teaching you how, this without using any specific technology and by only using abstract terms. Technology is indeed important and which you choose to develop your game programming skills is entirely up to you. However, it wont get you far unless you know how to think in order to create your desired functionality. The entire purpose of this tutorial is to teach you the mindset of a game programmer, and how one must think in order to utilize your technology/tools to achieve your own custom functionality.</p>
+
+<p>I decided to write this tutorial due to my last year experience from lecturing Game Design students in &laquo;Game prototyping and testing&raquo; using &laquo;FlashDevelop&raquo; and &laquo;ActionScript 3&raquo; as development tools. <a href="http://www.westerdals.no/english/" target="_blank"><img style="float: left; margin: 1em;max-width: 100px;" alt="Westerdals Oslo ACT logo" src="./assets/westerdals-logo-black.svg" /></a> I was surprised by the outcome of the lectures as it turned out the students' primary difficulties weren't related to the technology, but to the creation of functionality. They had problems understanding how they could use the tools to create their own functionality in their prototype games. So I wrote this tutorial as a part of my job at <a href="http://www.westerdals.no/english/" target="_blank">Westerdals Oslo ACT</a> (previously <em>The Norwegian School of IT (NITH)</em>), primarily as a introduction for this year's students, but I was advised to make it public as well.</p>
+
+<p>NB: the tutorial uses the &laquo;SVG&raquo; format for vector graphics and it is recommended that you upgrade your web browser, or switch to a more modern browser if you are unable to see the figures/images.</p>
+
+<h2>Introduction</h2>
+
+<p>This first part is about <em>abstract game programming</em>, and by abstract, I mean a general understanding of core game programming concepts. Concepts that apply to any game, any technology, and any tool for game development - even the <em>point-and-click</em> &quot;programming-free&quot; tools. The goal is to provide you with the necessary knowledge in order to be able to create the functionality <span style="text-decoration: underline;">you</span> want; from idea to a working solution. This requires a solid understanding of what game programming is all about, which is the first topic of this tutorial. It could be worth mentioning that it is recommended having some knowledge of object oriented programming to get the most out of this chapter, but I think everyone interested will gain good knowledge.</p>
+
+<h2>It's all about moving pixels</h2>
+
+<p>Before we move on, do some individual reflection on the two following questions:</p>
+
+<ol>
+	<li>What is a computer game (gamer's perspective)?</li>
+	<li>What happens under the hood of a computer game (technical perspective)?</li>
+</ol>
+
+<p><img alt="" src="./assets/what_is_a_game.svg" /></p>
+
+<p>There's no true correct answer to the first question, as it is primarily a matter of perception. Some might say &quot;an audio-visual experience&quot;, while others might go more technical and state &quot;an interactive user input based application, made for the purpose of entertainment&quot;. Frankly, it doesn't really matter, it was primarily a preparation and a contrast to the second question. I figure most people bothering to read this tutorial clearly have a common opinion on what a game actually is.</p>
+
+<p>The second question might also give a vast variety of answers, but they'll all probably narrow down to the same key concepts;</p>
+
+<ol>
+	<li>You need to somehow interact with the user.</li>
+	<li>You need to give some user feedback medium (visual/audio). Computer games; usually drawing to a screen.</li>
+	<li>The interaction should affect the feedback. These three concepts probably define the core of any game, thus being abstract.</li>
+	<li>You need to define some game rules that maps user input to the feedback medium. The rules are actually what makes your game an actual game, and hopefully also different from other games.</li>
+</ol>
+
+<p>These concepts probably define the very core of every game that exists, thus being abstract principles at a very high level. High level means that it's more of an overview, rather than being useful for game creation. The opposite is low level being at implementation details of games within various technologies. The provided concepts are actually at a so high level that we can delve deeper within each concept and still remain abstract, at least within computer games. The concepts provide a need for the following abstract components:</p>
+
+<ol>
+<li>A feedback medium, in our case a screen/window/context. Somewhere to draw graphics.</li>
+<li>An input/output interface; usually an <em>Application Programming Interface</em> (API) which is a technology allowing us to easily retrieve or submit data between the user. This primarily for user input. The API might also provide us with the feedback medium.</li>
+<li>Constant computational power to consistently connect the feedback medium with the user and to run the game rules.</li>
+</ol>
+
+<p>As you might have seen, no matter how these components work together, it's all about moving pixels on a screen.</p>
+
+<h3 style="margin-bottom: 0;">The Context</h3>
+<h4 style="margin-top: 0; margin-left: 1.5em; font-style: italic;">A.k.a. Screen, Stage, Window/World (Space)</h4>
+
+<p>&quot;A beloved child has many names&quot; is a famous Norwegian expression, or at least Scandinavian, and the Context is no exception. <em>OpenGL</em>, <em>DirectX</em>, and the <em>HTML5-Canvas-object</em> calls it &laquo;Context&raquo;, <em>Adobe Flash</em> calls it «Stage», a typical Windows user would probably call it «Window», and I am sure that it goes by many other names as well. I've chosen to call it &laquo;Context&raquo; as it seems to be the most professional term. The first thing you should know is that the Context is not necessarily the graphical representation of a drawable area itself, but programmatically the interface, often an object in object oriented languages, that provides you functionality to draw to it. The last sentence was quite technical, so don't be afraid if you didn't get it at once - we are still at the abstract level. It could however be wise to get back to it in a later stage of your game programming journey, in case you still doubt its definition.</p>
+
+<p>Common for the Context no matter what technology, is the <em>Cartesian coordinate system</em> and the possibility to draw on it. Most platforms these days support both two dimensional (2D) and three dimensional (3D) Contexts. For those of you that think 2D and 3D can't be compared; you are very wrong! The key difference is that 2D provides the <em>X</em> &amp; the <em>Y</em> axis, while 3D provides the additional <em>Z</em> axis. The bigger difference is that the 3D based technologies often provides much more flexible and advanced APIs, but the programmatically concepts still remain the same. I have therefore chosen to focus on 2D in this tutorial and online book. It is also easier for beginners.</p>
+
+<p>If you are unsure of what a coordinate system is and eventually how it works, I recommend reading <a target="_blank" href="http://en.wikipedia.org/wiki/Coordinate_system">Wikipedia's article</a> before moving on. You won't necessarily have to read it all, but make sure you understand the key concepts.</p>
+
+<h4>The coordinate system</h4>
+
+<p><img alt="" src="./assets/coordinates.svg" /></p>
+
+<p>So what does a coordinate system provide? Positioning! As we've already discussed, you want to draw something and the Context gives you a place to draw with a specified height and width. You can imagine it as a quite standard A4 paper, with the specified size of 21.0x29.7cm. Flip it over in "landscape mode" (laying; width is greatest) to be more representative for an actual screen. Now, you want to draw a 5cm line from the center of the paper against the right, so what do you have to do?</p>
+
+<ol>
+	<li>Calculate the coordinates (in cm) of the center of the paper (x, y)</li>
+	<li>Place your pencil at the calculated coordinate</li>
+	<li>Calculate the coordinates of the endpoint; 5cm to the right.</li>
+	<li>Move the pencil while touching the paper until you reach the endpoint.</li>
+</ol>
+
+<p>Excellent, now let's make it more like a game and specify the A4 paper's coordinate system. Firstly it's only 2D, secondly we need to specify the origin and the axis directions. Some technologies do this for you, while others like OpenGL allows you to do this on your own. We'll borrow Adobe Flash's coordinate system. The origin, the point where x &amp; y both are 0, is defined at the very top-left corner of our A4 sheet. The X axis defines the horizontal direction and increases against the right. The Y axis defines the vertical direction and increases against the bottom of the sheet, which is typically the opposite of the traditional coordinate system used in high school mathematics. Note that you are not able to draw at the X coordinate 29.7cm, nor the Y coordinate 21cm. These two coordinates marks the very end at the paper and you will in that case draw outside of the paper.</p>
+
+<p>With our coordinate system defined, we can now draw the line. Use the width and the height of the paper (Context) to calculate the center by dividing both on two. Result; x = 14.85, y = 10.5. Find this coordinate on the sheet and mark/place your pencil there, a ruler could be of excellent use. Calculate the endpoint coordinate, x + 5cm. Result; x = 19.85, y = 10.5. Good, now draw your line from the center to that coordinate. You might notice that your line doesn't get centered at the paper, but it starts at the center. So how do you actually center it? Easy! Divide the width of the line on two (5cm / 2cm = 2.5cm) and subtract it from the X coordinate of both the start- and endpoint.</p>
+
+<p>Now, you can draw three more lines to create a rectangle and you will end up with your very first shape. This is as you probably have noticed, a quite complex procedure, but still helps you understand the key concepts of using the Context coordinate system. Luckily, most technologies give you pre-made functions for this. The following example is ActionScript 3 (Flash), and gives you the same result, but is working with pixels (px) instead of cm. Remember that the context is called &laquo;Stage&raquo; in Flash.</p>
+
+<pre><code class="ActionScript">// Calculate the center of the stage
+var centerX: int = stage.stageWidth / 2;
+var centerY: int = stage.stageHeight / 2;
+
+// Define the length/width of the line
+var lineWidth: int = 5;
+
+// Calculate the start position of the line
+var lineStartX: int = centerX - (lineWidth / 2);
+var lineStartY: int = centerY;
+
+// Calculate the end position of the line
+var lineEndX: int = centerX + lineWidth;
+var lineEndY: int = lineStartY;
+
+// Move the "pencil" to the start of the line
+stage.graphics.moveTo(lineStartX, lineStartY);
+
+// Draw the line
+stage.graphics.lineTo(lineEndX, lineEndY);</code></pre>
+
+<p>Do <span style="text-decoration: underline;">not</span> be alarmed if you didn't get all of that. It was just a non-abstract example to bind the theory with a practical example.</p>
+
+<h4>A hierarchy of figures</h4>
+
+<p>As you have probably understood by now, drawing complex figures with code can be a big hassle and luckily, most technologies allow us to use proper easy-to use drawing tools and to import them into our programming projects as either bitmap images (jpg, png, bmp, etc.) or vector graphics (swf, svg, etc.). I will not present any examples or details on how to explicitly do that here, as it will take us away from the abstract approach. What you should now is that common for the technologies is the ability to either force or allow the programmer to group figures (drawable objects) in hierarchies. Why? Recall the complexity of managing one square or line, as in our previous example. Now imagine playing <em>Grand Theft Auto V</em> (GTA 5) and all the objects being visible at the same time. Now imagine that complexity in code! Working with all of them in one Context will give you messy, ugly, hard to work with, code! The solution is individual &laquo;object spaces&raquo;, known as a &laquo;Canvas&raquo; in HTML5 and a &quot;Sprite&quot; in Flash.</p>
+
+<p>So what exactly is an instance of an object space? It is more or less the exact same thing as the Context, except that it is not global addressable and that it doesn't appear on screen unless you tell it to. Lets get back to our A4 sheet of paper example. You have your Context (the paper), but you want to add a drawn helicopter. Grab a new sheet of paper, draw your helicopter on that sheet, and cut it out. This smaller piece of paper with a helicopter drawn on it represents now an object space. The origin is to the very left, and the proportions (width &amp; height) is defined by the size of the drawing. But this alone does not make it visible on the screen (Context). Want it visible? Place the object space piece of paper at the middle of the Context paper - well done! This is exactly how it works in programming as well, except that you have to specify on which Context coordinates you want to place the object space helicopter. If it is at the center, it would typically be the half of the Context's size minus the half of the helicopter's size, in both the x and y axis.</p>
+
+<img alt="" src="./assets/object_to_world.svg" />
+
+<p>There are more to this than just clean code. Imagine drawing the helicopter directly in the Context (screen). What if you wanted to move this 5px to the right? The helicopter might consist of several figures, and you would either have to move each and every figure or redraw the entire helicopter at its new position. The object space approach allows you to just change the helicopter object's coordinates in the context, and the technology will move the entire helicopter including all the figures it consists of! It is the same on paper, just move the smaller paper with the helicopter on it. Quite neat or what? Additionally you can also set up a hierarchy of objects. Let's say the chopper consisted of 6 shapes, each shape could have its own object space and all those object spaces could be placed in another object space, defining the helicopter itself. Then the helicopter space could be placed in the Context's space and you will have a three level hierarchy of objects. This allows for easy reuse of figures/objects, and is by some technologies also used to determine which objects that are to appear on top or below each other. This is a bit more complex to simulate on paper, as it is easier to copy a computer memory defined figure than a pencil drawing.</p>
+
+<p>You should now clearly understand that this is beneficial, but are there any drawbacks? Yes, but fortunately not a big one. You need to perform «coordinate translation» when working with different object spaces. This is typically a problem when checking for collisions between two different object spaces. Imagine you have two equally sized helicopters on your piece of paper (Context). You want to check if they collide by using some simple math. Subtract helicopter B's coordinates from helicopter A's coordinates, and see if the resulting coordinate is smaller than the width (x) or height (y) of one of the helicopters. Don't worry if you didn't quite get the math, more on collision detection later. If it is, they are colliding. But what's the problem? If you don't pay much attention to what you are doing, you will end up working with the coordinates in the two individual helicopter's object spaces, which results in failure. You can prevent this by translating the two individual coordinate spaces into Context coordinate space. How? Just add each individual helicopter's position (coordinates) in Context space to the equation.</p>
+
+<p><h4>This article is separated into the following parts:</h4>
+
+<ul>
+<li><a href="./abstract-games.html">Part 1</a>: Pseudocoding games</li>
+<li><a href="./abstract-games-p2.html">Part 2</a>: Creating functionality</li>
+<li><a href="./abstract-games-p3.html">Part 3</a>: Abstract programming</li>
+</ul>
+
+    </div>
+    
+    <div id="footer">
+      &copy; Stig 2010-2023
+    </div>
+  </body>
+</html>
